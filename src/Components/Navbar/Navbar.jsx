@@ -44,7 +44,7 @@ const Navbar = () => {
                         Available Coin
                     </NavLink>
                     <NavLink
-                        to="/joinUs"
+                        to="https://github.com/Programming-Hero-Web-Course4/b10a12-client-side-mahbubdev1"
                         className={({ isActive }) =>
                             isActive
                                 ? "text-cyan-300 font-semibold"
