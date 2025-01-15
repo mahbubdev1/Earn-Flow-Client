@@ -1,7 +1,6 @@
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword,GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import { auth } from "../Firebase/Firebase.Config";
-import { GoogleAuthProvider } from "firebase/auth/web-extension";
 import axios from "axios";
 
 export const AuthContext = createContext();
@@ -22,7 +21,7 @@ const AuthProvider = ({ children }) => {
     };
 
     const googleSingUp = () => {
-        setLoading(true)
+        // setLoading(true)
         return signInWithPopup(auth, googleProvider)
     };
 

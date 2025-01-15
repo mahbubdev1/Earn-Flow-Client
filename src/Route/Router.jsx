@@ -8,6 +8,7 @@ import Register from "../Social/Register";
 import Dashboard from "../Pages/Dashboard/Dashboard";
 import BuyerHome from "../Pages/BuyerDashboard/BuyerHome";
 import AddNewTask from "../Pages/BuyerDashboard/AddNewTask";
+import MyTasks from "../Pages/BuyerDashboard/MyTasks";
 
 const router = createBrowserRouter([
     {
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
             {
                 path: 'addTask',
                 element: <AddNewTask></AddNewTask>
+            },
+            {
+                path: 'myTask',
+                element: <MyTasks></MyTasks>
             }
         ]
     }

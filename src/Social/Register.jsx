@@ -150,11 +150,12 @@ const Register = () => {
                             <input type="submit" value="Register" className="w-full cursor-pointer bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-cyan-600 transition duration-300" />
                         </div>
 
-                        <div className="mb-4">
-                            <button onClick={handleGoogleLoginBtn} className="w-full flex justify-center items-center text-blue-500 font-medium hover:bg-blue-500 hover:text-white py-2 px-4 rounded-lg border border-cyan-600 transition duration-300"><span><FaGoogle /></span> <span className="ml-2">Google Login</span></button>
-                        </div>
-                        <p>Your Have Already Account? <Link to='/login' className="text-blue-500 font-medium">Please Login</Link></p>
+
                     </form>
+                    <div className="mb-4">
+                        <button onClick={handleGoogleLoginBtn} className="w-full flex justify-center items-center text-blue-500 font-medium hover:bg-blue-500 hover:text-white py-2 px-4 rounded-lg border border-cyan-600 transition duration-300"><span><FaGoogle /></span> <span className="ml-2">Google Login</span></button>
+                    </div>
+                    <p>Your Have Already Account? <Link to='/login' className="text-blue-500 font-medium">Please Login</Link></p>
                 </div>
             </div>
         </div>

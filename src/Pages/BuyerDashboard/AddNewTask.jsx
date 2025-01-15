@@ -1,10 +1,13 @@
 import axios from "axios";
 import { toast } from "react-toastify";
+import useAuth from "../../hook/useAuth";
 
 const api_key = import.meta.env.VITE_API_KEY;
 const image_api = `https://api.imgbb.com/1/upload?key=${api_key}`;
 
 const AddNewTask = () => {
+    const { user } = useAuth();
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const form = e.target;
@@ -12,7 +15,7 @@ const AddNewTask = () => {
         // Collecting form data
         const taskTitle = form.taskTitle.value;
         const taskDetail = form.taskDetail.value;
-        const worker = parseInt(form.worker.value, 10);
+        const worker = parseInt(form.worker.value);
         const payableAmount = parseFloat(form.payableAmount.value);
         const completionDate = form.completionDate.value;
         const submissionInfo = form.submissionInfo.value;
@@ -30,13 +33,14 @@ const AddNewTask = () => {
             formData.append("image", imageFile);
 
             const imageResponse = await axios.post(image_api, formData);
-            console.log(imageResponse.data);
+            // console.log(imageResponse.data);
 
             if (imageResponse.data.success) {
                 const taskImageUrl = imageResponse.data.data.url;
 
                 // Prepare data to send to the backend
                 const taskData = {
+                    email: user?.email,
                     taskTitle,
                     taskDetail,
                     requiredWorkers: worker,
