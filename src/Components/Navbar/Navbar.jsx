@@ -3,7 +3,7 @@ import useAuth from "../../hook/useAuth";
 import { toast } from "react-toastify";
 
 const Navbar = () => {
-    const { handleSignOut, user } = useAuth();
+    const { handleSignOut, user, coin } = useAuth();
 
     const handleSignOutBtn = async () => {
         await handleSignOut()
@@ -53,7 +53,7 @@ const Navbar = () => {
                                         : "hover:text-cyan-300 transition duration-300"
                                 }
                             >
-                                Available Coin
+                                Available Coin ${coin}
                             </NavLink>
                         </>
                     }

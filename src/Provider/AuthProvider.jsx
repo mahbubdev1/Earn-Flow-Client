@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword,GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import { auth } from "../Firebase/Firebase.Config";
 import axios from "axios";
@@ -10,6 +10,22 @@ const googleProvider = new GoogleAuthProvider();
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [coin, setCoin] = useState(0);
+
+     // Load coin value from localStorage if available
+     useEffect(() => {
+        const storedCoin = localStorage.getItem("coin");
+        if (storedCoin) {
+            setCoin(parseInt(storedCoin));
+        }
+    }, []);
+
+    // Update coin value in localStorage whenever coin changes
+    useEffect(() => {
+        if (coin !== 0) {
+            localStorage.setItem("coin", coin);
+        }
+    }, [coin]);
 
     const handleEmailPassRegister = (email, password) => {
         return createUserWithEmailAndPassword(auth, email, password)
@@ -21,7 +37,7 @@ const AuthProvider = ({ children }) => {
     };
 
     const googleSingUp = () => {
-        // setLoading(true)
+        setLoading(true)
         return signInWithPopup(auth, googleProvider)
     };
 
@@ -44,29 +60,28 @@ const AuthProvider = ({ children }) => {
     };
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-            // console.log(currentUser)
+        const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
             if (currentUser) {
-                setUser(currentUser)
+                setUser(currentUser);
                 const userInfo = { email: currentUser.email };
-                axios.post(`${import.meta.env.VITE_API_URL}/jwt`, userInfo, {withCredentials: true})
-                    .then(res => {
-                        if (res.data.token) {
-                            localStorage.setItem('access-token', res.data.token);
-                            setLoading(false)
-                        }
-                    })
+                try {
+                    const res = await axios.post(`${import.meta.env.VITE_API_URL}/jwt`, userInfo, { withCredentials: true });
+                    if (res.data.token) {
+                        localStorage.setItem('access-token', res.data.token);
+                    }
+                } catch (error) {
+                    console.error("JWT Token Error:", error);
+                }
+            } else {
+                localStorage.removeItem('access-token');
+                setUser(null);
             }
-            else {
-                localStorage.removeItem('access-token')
-                setUser(currentUser)
-                setLoading(false)
-            }
-        })
+            setLoading(false);
+        });
 
         return () => unsubscribe();
+    }, []);
 
-    }, [])
 
     const allData = {
         user,
@@ -76,7 +91,9 @@ const AuthProvider = ({ children }) => {
         handleSignOut,
         handleEmailPassRegister,
         handleManageUser,
-        handleSignEmailPassword
+        handleSignEmailPassword,
+        setCoin,
+        coin
     }
 
     return (

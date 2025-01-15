@@ -7,7 +7,7 @@ import { RiHistoryLine } from "react-icons/ri";
 import { ToastContainer } from "react-toastify";
 
 const Dashboard = () => {
-    const { user } = useAuth();
+    const { user, coin } = useAuth();
 
     return (
         <div className="">
@@ -19,7 +19,7 @@ const Dashboard = () => {
                         <div className="flex items-center space-x-4">
                             <div className="text-right">
                                 <p className="font-bold">{user?.displayName}</p>
-                                <p className="text-sm">Coins: {user?.coins}</p>
+                                <p className="text-sm">Coins: {coin}</p>
                             </div>
                             <img
                                 src={user?.photoURL}
