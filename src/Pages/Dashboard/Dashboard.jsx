@@ -4,6 +4,7 @@ import { FaHome } from "react-icons/fa";
 import { MdAddTask, MdOutlineTask } from "react-icons/md";
 import { ImCoinDollar } from "react-icons/im";
 import { RiHistoryLine } from "react-icons/ri";
+import { ToastContainer } from "react-toastify";
 
 const Dashboard = () => {
     const { user } = useAuth();
@@ -128,6 +129,7 @@ const Dashboard = () => {
                     </main>
                 </div>
             </div>
+            <ToastContainer></ToastContainer>
         </div>
     );
 };

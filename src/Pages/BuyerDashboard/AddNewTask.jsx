@@ -1,31 +1,69 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const api_key = import.meta.env.VITE_API_KEY;
 const image_api = `https://api.imgbb.com/1/upload?key=${api_key}`;
 
 const AddNewTask = () => {
-    const handleSubmit = e => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const form = e.target;
+
+        // Collecting form data
         const taskTitle = form.taskTitle.value;
         const taskDetail = form.taskDetail.value;
-        const worker = form.worker.value;
-        const payableAmount = form.payableAmount.value;
+        const worker = parseInt(form.worker.value, 10);
+        const payableAmount = parseFloat(form.payableAmount.value);
         const completionDate = form.completionDate.value;
         const submissionInfo = form.submissionInfo.value;
-        // const taskImageUrl = form.taskImageUrl.value;
         const imageFile = form.taskImageUrl.files[0];
 
-        const formData = new FormData();
-        formData.append("image", imageFile);
+        // Validating Image
+        if (!imageFile) {
+            toast.error("Please upload an image!");
+            return;
+        }
 
-        axios.post(image_api, {
-            formData
-        })
-        .then(res => {
-            console.log(res);
-        })
-    }
+        try {
+            // Upload Image to imgbb
+            const formData = new FormData();
+            formData.append("image", imageFile);
+
+            const imageResponse = await axios.post(image_api, formData);
+            console.log(imageResponse.data);
+
+            if (imageResponse.data.success) {
+                const taskImageUrl = imageResponse.data.data.url;
+
+                // Prepare data to send to the backend
+                const taskData = {
+                    taskTitle,
+                    taskDetail,
+                    requiredWorkers: worker,
+                    payableAmount,
+                    completionDate,
+                    submissionInfo,
+                    taskImageUrl,
+                };
+
+                // end data to the backend
+                const backendResponse = await axios.post(`${import.meta.env.VITE_API_URL}/tasks`, taskData);
+
+                if (backendResponse.data.insertedId) {
+                    toast.success("Task added successfully!");
+                    form.reset();
+                } else {
+                    toast.error("Failed to add task. Please try again.");
+                }
+            } else {
+                toast.error("Image upload failed. Please try again.");
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            toast.error("Something went wrong. Please try again.");
+        }
+    };
+
     return (
         <div className="max-w-2xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
             <h2 className="text-2xl font-bold text-center mb-6">Add New Task</h2>
@@ -59,7 +97,7 @@ const AddNewTask = () => {
 
                 {/* Required Workers */}
                 <div className="form-control">
-                    <label htmlFor="requiredWorkers" className="label font-semibold">
+                    <label htmlFor="worker" className="label font-semibold">
                         Required Workers
                     </label>
                     <input
@@ -126,9 +164,11 @@ const AddNewTask = () => {
                 </div>
 
                 {/* Submit Button */}
-                <input value='Add Task' type="submit" className="btn btn-primary w-full mt-4">
-
-                </input>
+                <input
+                    value="Add Task"
+                    type="submit"
+                    className="btn btn-primary w-full mt-4"
+                />
             </form>
         </div>
     );
