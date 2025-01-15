@@ -1,6 +1,6 @@
 import Lottie from "lottie-react";
 import LottieImg from "../assets/Lootie/loginLottie.json";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../hook/useAuth";
 import { toast } from "react-toastify";
 import { FaGoogle } from "react-icons/fa";
@@ -8,10 +8,20 @@ import { FaGoogle } from "react-icons/fa";
 const Login = () => {
     const { handleSignEmailPassword, googleSingUp } = useAuth();
 
-    const handleSubmit = () => {
-        handleSignEmailPassword()
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const pathname = location.state?.form?.pathname || '/';
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const from = e.target;
+        const email = from.email.value;
+        const password = from.password.value;
+        handleSignEmailPassword(email, password)
             .then(() => {
                 toast.success('Login Success')
+                navigate(pathname, { replace: true })
             })
             .catch((err) => {
                 toast.error(err.message)
@@ -20,7 +30,8 @@ const Login = () => {
 
     const handleGoogleLoginBtn = () => {
         googleSingUp()
-            .then(result => {
+            .then(() => {
+                navigate(pathname, { replace: true })
                 toast.success('Google Login Success')
             })
             .catch((err) => {
@@ -69,7 +80,7 @@ const Login = () => {
 
                         {/* Login Button */}
                         <div className="mb-4">
-                            <input type="submit" value="Login" className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-cyan-600 transition duration-300" />
+                            <input type="submit" value="Login" className="w-full cursor-pointer bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-cyan-600 transition duration-300" />
                         </div>
 
                         <div className="mb-4">
@@ -86,7 +97,7 @@ const Login = () => {
                         {/* Register Redirect */}
                         <div className="text-center mt-4">
                             <p className="text-sm text-gray-600">
-                                Don't have an account?{" "}
+                                Dont have an account?{" "}
                                 <Link to='/register' className="text-cyan-600 font-medium hover:underline">
                                     Register here
                                 </Link>

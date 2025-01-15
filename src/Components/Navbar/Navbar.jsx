@@ -24,26 +24,6 @@ const Navbar = () => {
                 {/* Navigation Links */}
                 <div className="hidden lg:flex space-x-6">
                     <NavLink
-                        to="/dashboard"
-                        className={({ isActive }) =>
-                            isActive
-                                ? "text-cyan-300 font-semibold"
-                                : "hover:text-cyan-300 transition duration-300"
-                        }
-                    >
-                        Dashboard
-                    </NavLink>
-                    <NavLink
-                        to="/availableCoin"
-                        className={({ isActive }) =>
-                            isActive
-                                ? "text-cyan-300 font-semibold"
-                                : "hover:text-cyan-300 transition duration-300"
-                        }
-                    >
-                        Available Coin
-                    </NavLink>
-                    <NavLink
                         to="https://github.com/Programming-Hero-Web-Course4/b10a12-client-side-mahbubdev1"
                         className={({ isActive }) =>
                             isActive
@@ -53,6 +33,30 @@ const Navbar = () => {
                     >
                         Join Us
                     </NavLink>
+                    {
+                        user && <>
+                            <NavLink
+                                to="/dashboard"
+                                className={({ isActive }) =>
+                                    isActive
+                                        ? "text-cyan-300 font-semibold"
+                                        : "hover:text-cyan-300 transition duration-300"
+                                }
+                            >
+                                Dashboard
+                            </NavLink>
+                            <NavLink
+                                to="/availableCoin"
+                                className={({ isActive }) =>
+                                    isActive
+                                        ? "text-cyan-300 font-semibold"
+                                        : "hover:text-cyan-300 transition duration-300"
+                                }
+                            >
+                                Available Coin
+                            </NavLink>
+                        </>
+                    }
                 </div>
 
                 {/* Buttons Section */}

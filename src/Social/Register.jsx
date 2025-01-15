@@ -147,7 +147,7 @@ const Register = () => {
 
                         {/* Submit Button */}
                         <div className="mb-4">
-                            <input type="submit" value="Register" className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-cyan-600 transition duration-300" />
+                            <input type="submit" value="Register" className="w-full cursor-pointer bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-cyan-600 transition duration-300" />
                         </div>
 
                         <div className="mb-4">

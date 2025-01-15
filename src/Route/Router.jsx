@@ -6,6 +6,8 @@ import Home from "../Components/Home/Home";
 import Login from "../Social/Login";
 import Register from "../Social/Register";
 import Dashboard from "../Pages/Dashboard/Dashboard";
+import BuyerHome from "../Pages/BuyerDashboard/BuyerHome";
+import AddNewTask from "../Pages/BuyerDashboard/AddNewTask";
 
 const router = createBrowserRouter([
     {
@@ -28,7 +30,17 @@ const router = createBrowserRouter([
     },
     {
         path:'/dashboard',
-        element: <Dashboard></Dashboard>
+        element: <Dashboard></Dashboard>,
+        children: [
+            {
+                path: 'buyerHome',
+                element: <BuyerHome></BuyerHome>
+            },
+            {
+                path: 'addTask',
+                element: <AddNewTask></AddNewTask>
+            }
+        ]
     }
 ]);
 
