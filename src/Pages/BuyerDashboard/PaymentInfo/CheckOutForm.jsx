@@ -46,7 +46,7 @@ const CheckOutForm = ({ amount }) => {
                 });
                 console.log(response);
             } catch (backendError) {
-                alert("Payment recorded successfully, but failed to update backend.");
+                toast.error("Payment recorded successfully, but failed to update backend.");
             }
 
 

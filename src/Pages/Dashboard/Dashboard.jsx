@@ -1,4 +1,4 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet } from "react-router-dom";
 import useAuth from "../../hook/useAuth";
 import { FaHome } from "react-icons/fa";
 import { MdAddTask, MdOutlineTask } from "react-icons/md";
@@ -15,7 +15,7 @@ const Dashboard = () => {
                 {/* Top Header */}
                 <header className="bg-blue-500">
                     <div className="container mx-auto text-white px-6 py-4 flex justify-between items-center">
-                        <div className="font-bold text-2xl">EarnFlow</div>
+                        <div className="font-bold text-2xl"><Link to='/'>EarnFlow</Link></div>
                         <div className="flex items-center space-x-4">
                             <div className="text-right">
                                 <p className="font-bold">{user?.displayName}</p>

@@ -2,6 +2,7 @@ import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged,
 import { createContext, useEffect, useState } from "react";
 import { auth } from "../Firebase/Firebase.Config";
 import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 
 export const AuthContext = createContext();
 
@@ -12,20 +13,33 @@ const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
     const [coin, setCoin] = useState(0);
 
-     // Load coin value from localStorage if available
-     useEffect(() => {
-        const storedCoin = localStorage.getItem("coin");
-        if (storedCoin) {
-            setCoin(parseInt(storedCoin));
-        }
-    }, []);
+    // Load coin value from localStorage if available
+    // useEffect(() => {
+    //     const storedCoin = localStorage.getItem("coin");
+    //     if (storedCoin) {
+    //         setCoin(parseInt(storedCoin));
+    //     }
+    // }, []);
 
     // Update coin value in localStorage whenever coin changes
-    useEffect(() => {
-        if (coin !== 0) {
-            localStorage.setItem("coin", coin);
-        }
-    }, [coin]);
+    // useEffect(() => {
+    //     if (coin !== 0) {
+    //         localStorage.setItem("coin", coin);
+    //     }
+    // }, [coin]);
+
+
+    const { data } = useQuery({
+        queryKey: ['users', user?.email],
+        queryFn: async () => {
+            const res = await axios.get(`${import.meta.env.VITE_API_URL}/users/${user?.email}`);
+            setCoin(res.data.userCoin)
+            return res.data.userCoin
+        },
+        enabled: !!user?.email,
+    });
+
+    console.log(data);
 
     const handleEmailPassRegister = (email, password) => {
         return createUserWithEmailAndPassword(auth, email, password)

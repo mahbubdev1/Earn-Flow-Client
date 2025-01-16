@@ -6,7 +6,7 @@ const api_key = import.meta.env.VITE_API_KEY;
 const image_api = `https://api.imgbb.com/1/upload?key=${api_key}`;
 
 const AddNewTask = () => {
-    const { user } = useAuth();
+    const { user, coin, setCoin } = useAuth();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -25,6 +25,12 @@ const AddNewTask = () => {
         if (!imageFile) {
             toast.error("Please upload an image!");
             return;
+        };
+
+        const totalAmount = worker * payableAmount;
+
+        if (coin < totalAmount) {
+            return toast.error('Not enough balance')
         }
 
         try {
@@ -54,11 +60,29 @@ const AddNewTask = () => {
                 const backendResponse = await axios.post(`${import.meta.env.VITE_API_URL}/tasks`, taskData);
 
                 if (backendResponse.data.insertedId) {
-                    toast.success("Task added successfully!");
-                    form.reset();
-                } else {
-                    toast.error("Failed to add task. Please try again.");
+                    // Calculate updated coin value
+                    const updatedCoin = coin - totalAmount;
+
+                    // Update coin on server and locally
+                    try {
+                        const coinResponse = await axios.patch(`${import.meta.env.VITE_API_URL}/users/coin`, {
+                            email: user?.email,
+                            coin: updatedCoin,
+                        });
+
+                        console.log(coinResponse);
+
+                        if (coinResponse.data.success) {
+                            setCoin(updatedCoin);
+                            toast.success("Task added successfully!");
+                            form.reset();
+                        }
+                    } catch (error) {
+                        console.error("Error updating coin:", error);
+                    }
                 }
+
+
             } else {
                 toast.error("Image upload failed. Please try again.");
             }
