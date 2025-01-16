@@ -2,9 +2,11 @@ import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import axios from "axios";
 import { toast } from "react-toastify";
 import useAuth from "../../../hook/useAuth";
+import { useNavigate } from "react-router-dom";
 
 const CheckOutForm = ({ amount }) => {
-    const { coin, setCoin, user } = useAuth();
+    const { user,refetch } = useAuth();
+    const navigate = useNavigate();
 
     const stripe = useStripe();
     const elements = useElements();
@@ -16,20 +18,19 @@ const CheckOutForm = ({ amount }) => {
 
         const card = elements.getElement(CardElement);
 
-        // Step 1: Get clientSecret from the backend
+        // Get clientSecret from the backend
         const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/create-payment-intent`, {
             amount: amountInCents,
         });
 
-        const clientSecret = data.clientSecret; // Extract clientSecret
+        const clientSecret = data.clientSecret;
 
-        // Step 2: Confirm the payment
-        const userId = localStorage.getItem('access-token');
+        // Confirm the payment
         const { paymentIntent, error } = await stripe.confirmCardPayment(clientSecret, {
             payment_method: {
                 card: card,
                 billing_details: {
-                    name: userId, // Replace with dynamic user data if available
+                    name: user.email,
                 },
             },
         });
@@ -41,21 +42,15 @@ const CheckOutForm = ({ amount }) => {
             toast.success("Payment Successful!");
             try {
                 const response = await axios.post(`${import.meta.env.VITE_API_URL}/payment-success/${user.email}`, {
-                    paymentIntentId: paymentIntent.id,
+                    paymentId: paymentIntent.id,
                     amount: paymentIntent.amount,
                 });
-                console.log(response);
-            } catch (backendError) {
+                refetch();
+                navigate('/dashboard/paymentHistory');
+                
+            } catch (err) {
                 toast.error("Payment recorded successfully, but failed to update backend.");
-            }
-
-
-            // console.log(paymentIntent);
-
-            // if (paymentIntent.amount === 100) {
-            //     console.log("payment amount", coin + 10);
-            //     setCoin(coin + 10);
-            // }
+            };
         };
     };
 

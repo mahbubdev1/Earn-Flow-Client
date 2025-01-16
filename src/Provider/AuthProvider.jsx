@@ -29,7 +29,7 @@ const AuthProvider = ({ children }) => {
     // }, [coin]);
 
 
-    const { data } = useQuery({
+    const { data, refetch } = useQuery({
         queryKey: ['users', user?.email],
         queryFn: async () => {
             const res = await axios.get(`${import.meta.env.VITE_API_URL}/users/${user?.email}`);
@@ -107,7 +107,8 @@ const AuthProvider = ({ children }) => {
         handleManageUser,
         handleSignEmailPassword,
         setCoin,
-        coin
+        coin,
+        refetch
     }
 
     return (

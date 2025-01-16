@@ -12,6 +12,14 @@ import MyTasks from "../Pages/BuyerDashboard/MyTasks";
 import UpdateTask from "../Pages/BuyerDashboard/UpdateTask";
 import Payment from "../Pages/BuyerDashboard/PaymentInfo/Payment";
 import PurchaseCoin from "../Pages/BuyerDashboard/PurchaseCoin";
+import PaymentHistory from "../Pages/BuyerDashboard/PaymentInfo/PaymentHistory";
+import WorkerHome from "../Pages/WorkerDashboard/WorkerHome";
+import TaskList from "../Pages/WorkerDashboard/TaskList";
+import MySubmission from "../Pages/WorkerDashboard/MySubmission";
+import WithDrawals from "../Pages/WorkerDashboard/WithDrawals";
+import AdminHome from "../Pages/AdminDashboard/AdminHome";
+import ManageUsers from "../Pages/AdminDashboard/ManageUsers";
+import ManageTasks from "../Pages/AdminDashboard/ManageTasks";
 
 const router = createBrowserRouter([
     {
@@ -36,6 +44,7 @@ const router = createBrowserRouter([
         path: '/dashboard',
         element: <Dashboard></Dashboard>,
         children: [
+            // Buyer Router
             {
                 path: 'buyerHome',
                 element: <BuyerHome></BuyerHome>
@@ -59,6 +68,40 @@ const router = createBrowserRouter([
             {
                 path: 'pay/:amount',
                 element: <Payment></Payment>
+            },
+            {
+                path: 'paymentHistory',
+                element: <PaymentHistory></PaymentHistory>
+            },
+            // Worker Route
+            {
+                path: 'workerHome',
+                element: <WorkerHome></WorkerHome>
+            },
+            {
+                path: 'taskList',
+                element: <TaskList></TaskList>
+            },
+            {
+                path: 'mySubmission',
+                element: <MySubmission></MySubmission>
+            },
+            {
+                path: 'withDrawals',
+                element: <WithDrawals></WithDrawals>
+            },
+            // Admin Related Route
+            {
+                path:'adminHome',
+                element: <AdminHome></AdminHome>
+            },
+            {
+                path: 'manageUsers',
+                element: <ManageUsers></ManageUsers>
+            },
+            {
+                path: 'manageTasks',
+                element: <ManageTasks></ManageTasks>
             }
         ]
     }

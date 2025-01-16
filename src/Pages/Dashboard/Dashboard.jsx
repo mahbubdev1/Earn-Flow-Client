@@ -5,9 +5,12 @@ import { MdAddTask, MdOutlineTask } from "react-icons/md";
 import { ImCoinDollar } from "react-icons/im";
 import { RiHistoryLine } from "react-icons/ri";
 import { ToastContainer } from "react-toastify";
+import useRole from "../../hook/useRole";
 
 const Dashboard = () => {
     const { user, coin } = useAuth();
+    const [role] = useRole();
+    console.log(role);
 
     return (
         <div className="">
@@ -37,55 +40,135 @@ const Dashboard = () => {
                         <div className="text-center py-6">
                             <h2 className="font-bold text-xl">Navigation</h2>
                             <div className="mt-6">
-                                <NavLink
-                                    to="/dashboard/buyerHome"
-                                    className={({ isActive }) =>
-                                        `flex items-center justify-center px-5 py-2 gap-2 text-lg font-medium mx-auto ${isActive ? 'bg-blue-600' : 'bg-blue-500 hover:bg-blue-600'
-                                        }`
-                                    }
-                                >
-                                    <FaHome></FaHome>Buyer Home
-                                </NavLink>
+                                {
+                                    role === 'Buyer' && <>
+                                        <NavLink
+                                            to="/dashboard/buyerHome"
+                                            className={({ isActive }) =>
+                                                `flex items-center justify-center px-5 py-2 gap-2 text-lg font-medium mx-auto ${isActive ? 'bg-blue-600' : 'bg-blue-500 hover:bg-blue-600'
+                                                }`
+                                            }
+                                        >
+                                            <FaHome></FaHome>Buyer Home
+                                        </NavLink>
 
-                                <NavLink
-                                    to="/dashboard/addTask"
-                                    className={({ isActive }) =>
-                                        `flex items-center justify-center my-3 px-5 py-2 gap-2 text-lg font-medium mx-auto ${isActive ? 'bg-blue-600' : 'bg-blue-500 hover:bg-blue-600'
-                                        }`
-                                    }
-                                >
-                                    <MdAddTask />Add new Tasks
-                                </NavLink>
+                                        <NavLink
+                                            to="/dashboard/addTask"
+                                            className={({ isActive }) =>
+                                                `flex items-center justify-center my-3 px-5 py-2 gap-2 text-lg font-medium mx-auto ${isActive ? 'bg-blue-600' : 'bg-blue-500 hover:bg-blue-600'
+                                                }`
+                                            }
+                                        >
+                                            <MdAddTask />Add new Tasks
+                                        </NavLink>
 
-                                <NavLink
-                                    to="/dashboard/myTask"
-                                    className={({ isActive }) =>
-                                        `flex items-center justify-center px-5 py-2 gap-2 text-lg font-medium mx-auto ${isActive ? 'bg-blue-600' : 'bg-blue-500 hover:bg-blue-600'
-                                        }`
-                                    }
-                                >
-                                    <MdOutlineTask />My Task’s
-                                </NavLink>
+                                        <NavLink
+                                            to="/dashboard/myTask"
+                                            className={({ isActive }) =>
+                                                `flex items-center justify-center px-5 py-2 gap-2 text-lg font-medium mx-auto ${isActive ? 'bg-blue-600' : 'bg-blue-500 hover:bg-blue-600'
+                                                }`
+                                            }
+                                        >
+                                            <MdOutlineTask />My Task’s
+                                        </NavLink>
 
-                                <NavLink
-                                    to="/dashboard/purchaseCoin"
-                                    className={({ isActive }) =>
-                                        `flex items-center justify-center my-3 px-5 py-2 gap-2 text-lg font-medium mx-auto ${isActive ? 'bg-blue-600' : 'bg-blue-500 hover:bg-blue-600'
-                                        }`
-                                    }
-                                >
-                                   <ImCoinDollar />Purchase Coin
-                                </NavLink>
+                                        <NavLink
+                                            to="/dashboard/purchaseCoin"
+                                            className={({ isActive }) =>
+                                                `flex items-center justify-center my-3 px-5 py-2 gap-2 text-lg font-medium mx-auto ${isActive ? 'bg-blue-600' : 'bg-blue-500 hover:bg-blue-600'
+                                                }`
+                                            }
+                                        >
+                                            <ImCoinDollar />Purchase Coin
+                                        </NavLink>
 
-                                <NavLink
-                                    to="/dashboard/paymentHistory"
-                                    className={({ isActive }) =>
-                                        `flex items-center justify-center px-5 py-2 gap-2 text-lg font-medium mx-auto ${isActive ? 'bg-blue-600' : 'bg-blue-500 hover:bg-blue-600'
-                                        }`
-                                    }
-                                >
-                                    <RiHistoryLine />Payment History
-                                </NavLink>
+                                        <NavLink
+                                            to="/dashboard/paymentHistory"
+                                            className={({ isActive }) =>
+                                                `flex items-center justify-center px-5 py-2 gap-2 text-lg font-medium mx-auto ${isActive ? 'bg-blue-600' : 'bg-blue-500 hover:bg-blue-600'
+                                                }`
+                                            }
+                                        >
+                                            <RiHistoryLine />Payment History
+                                        </NavLink>
+                                    </>
+                                }
+
+
+                                {
+                                    role === 'Worker' && <>
+                                        <NavLink
+                                            to="/dashboard/workerHome"
+                                            className={({ isActive }) =>
+                                                `flex items-center justify-center px-5 py-2 gap-2 text-lg font-medium mx-auto ${isActive ? 'bg-blue-600' : 'bg-blue-500 hover:bg-blue-600'
+                                                }`
+                                            }
+                                        >
+                                            <RiHistoryLine />Worker Home
+                                        </NavLink>
+
+                                        <NavLink
+                                            to="/dashboard/taskList"
+                                            className={({ isActive }) =>
+                                                `flex items-center justify-center my-3 px-5 py-2 gap-2 text-lg font-medium mx-auto ${isActive ? 'bg-blue-600' : 'bg-blue-500 hover:bg-blue-600'
+                                                }`
+                                            }
+                                        >
+                                            <RiHistoryLine />Task List
+                                        </NavLink>
+                                        <NavLink
+                                            to="/dashboard/mySubmission"
+                                            className={({ isActive }) =>
+                                                `flex items-center justify-center px-5 py-2 gap-2 text-lg font-medium mx-auto ${isActive ? 'bg-blue-600' : 'bg-blue-500 hover:bg-blue-600'
+                                                }`
+                                            }
+                                        >
+                                            <RiHistoryLine />My Submission
+                                        </NavLink>
+                                        <NavLink
+                                            to="/dashboard/withDrawals"
+                                            className={({ isActive }) =>
+                                                `flex items-center justify-center mt-3 px-5 py-2 gap-2 text-lg font-medium mx-auto ${isActive ? 'bg-blue-600' : 'bg-blue-500 hover:bg-blue-600'
+                                                }`
+                                            }
+                                        >
+                                            <RiHistoryLine />WithDrawals
+                                        </NavLink>
+                                    </>
+                                }
+
+                                {
+                                    role === 'Admin' && <>
+                                        <NavLink
+                                            to="/dashboard/adminHome "
+                                            className={({ isActive }) =>
+                                                `flex items-center justify-center px-5 py-2 gap-2 text-lg font-medium mx-auto ${isActive ? 'bg-blue-600' : 'bg-blue-500 hover:bg-blue-600'
+                                                }`
+                                            }
+                                        >
+                                            <RiHistoryLine />Admin Home
+                                        </NavLink>
+                                        <NavLink
+                                            to="/dashboard/manageUsers"
+                                            className={({ isActive }) =>
+                                                `flex items-center justify-center px-5 py-2 my-3 gap-2 text-lg font-medium mx-auto ${isActive ? 'bg-blue-600' : 'bg-blue-500 hover:bg-blue-600'
+                                                }`
+                                            }
+                                        >
+                                            <RiHistoryLine />Manage Users
+                                        </NavLink>
+                                        <NavLink
+                                            to="/dashboard/manageTasks"
+                                            className={({ isActive }) =>
+                                                `flex items-center justify-center px-5 py-2 gap-2 text-lg font-medium mx-auto ${isActive ? 'bg-blue-600' : 'bg-blue-500 hover:bg-blue-600'
+                                                }`
+                                            }
+                                        >
+                                            <RiHistoryLine />Manage Tasks
+                                        </NavLink>
+                                    </>
+                                }
+
                             </div>
                         </div>
 
