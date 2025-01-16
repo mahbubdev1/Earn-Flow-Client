@@ -1,12 +1,14 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 import useAuth from "../../hook/useAuth";
+import { useNavigate } from "react-router-dom";
 
 const api_key = import.meta.env.VITE_API_KEY;
 const image_api = `https://api.imgbb.com/1/upload?key=${api_key}`;
 
 const AddNewTask = () => {
     const { user, coin, setCoin } = useAuth();
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -30,6 +32,7 @@ const AddNewTask = () => {
         const totalAmount = worker * payableAmount;
 
         if (coin < totalAmount) {
+            navigate('/dashboard/purchaseCoin')
             return toast.error('Not enough balance')
         }
 

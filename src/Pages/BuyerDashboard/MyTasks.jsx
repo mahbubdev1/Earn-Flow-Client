@@ -5,10 +5,10 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const MyTasks = () => {
-    const { user } = useAuth();
+    const { user, refetch } = useAuth();
 
     // Fetch tasks data
-    const { data: tasks = [], refetch } = useQuery({
+    const { data: tasks = [], refetch: taskRefetch } = useQuery({
         queryKey: ['tasks', user?.email],
         queryFn: async () => {
             const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/tasks/user/${user?.email}`);
@@ -26,16 +26,16 @@ const MyTasks = () => {
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, delete it!"
-        }).then(async(result) => {
+        }).then(async (result) => {
             if (result.isConfirmed) {
-                const res = await axios.delete(`${import.meta.env.VITE_API_URL}/tasks/${taskId}`)
-                console.log(res);
+                const res = await axios.delete(`${import.meta.env.VITE_API_URL}/tasks/${taskId}?email=${user?.email}`)
                 if (res.data.deletedCount > 0) {
                     Swal.fire({
                         title: "Deleted!",
                         text: "Your file has been deleted.",
                         icon: "success"
                     });
+                    taskRefetch();
                     refetch();
                 }
             }
@@ -52,7 +52,6 @@ const MyTasks = () => {
                             <th>No</th>
                             <th>Title</th>
                             <th>Detail</th>
-                            <th>Workers</th>
                             <th>Payable</th>
                             <th>Completion Date</th>
                             <th>Actions</th>
@@ -64,7 +63,6 @@ const MyTasks = () => {
                                 <td>{index + 1}</td>
                                 <td>{task.taskTitle}</td>
                                 <td>{task.taskDetail}</td>
-                                <td>{task.requiredWorkers}</td>
                                 <td>${task.requiredWorkers}</td>
                                 <td>{new Date(task.completionDate).toLocaleDateString()}</td>
                                 <td>

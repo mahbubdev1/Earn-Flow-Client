@@ -39,7 +39,7 @@ const AuthProvider = ({ children }) => {
         enabled: !!user?.email,
     });
 
-    console.log(data);
+    // console.log(data);
 
     const handleEmailPassRegister = (email, password) => {
         return createUserWithEmailAndPassword(auth, email, password)
