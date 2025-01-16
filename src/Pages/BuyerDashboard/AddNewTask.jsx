@@ -57,6 +57,7 @@ const AddNewTask = () => {
                     completionDate,
                     submissionInfo,
                     taskImageUrl,
+                    buyerName: user?.displayName,
                 };
 
                 // end data to the backend
