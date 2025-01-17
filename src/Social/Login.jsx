@@ -28,17 +28,7 @@ const Login = () => {
                 toast.error(err.message)
             })
     }
-
-    // const handleGoogleLoginBtn = () => {
-    //     googleSingUp()
-    //         .then(() => {
-    //             navigate(pathname, { replace: true })
-    //             toast.success('Google Login Success')
-    //         })
-    //         .catch((err) => {
-    //             toast.error(err.message)
-    //         })
-    // }
+    
     return (
         <div className="min-h-screen bg-gray-100 flex items-center justify-center">
             <div className="container mx-auto flex flex-col lg:flex-row items-center justify-between gap-8 px-5">

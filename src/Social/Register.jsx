@@ -9,7 +9,7 @@ const api_key = import.meta.env.VITE_API_KEY;
 const image_api = `https://api.imgbb.com/1/upload?key=${api_key}`
 
 const Register = () => {
-    const { handleEmailPassRegister, handleManageUser } = useAuth();
+    const { handleEmailPassRegister, handleManageUser, refetch } = useAuth();
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -39,13 +39,14 @@ const Register = () => {
                     handleEmailPassRegister(email, password)
                         .then(() => {
                             handleManageUser(name, imageUrl)
-                                .then(() => {
+                                .then(async () => {
                                     const userData = { name, email, imageUrl, role, userCoin: role == 'Worker' ? parseInt(10) : parseInt(50) }
-                                    axios.post(`${import.meta.env.VITE_API_URL}/users`, userData)
+                                    // console.log('user data: ',userData);
+                                    await axios.post(`${import.meta.env.VITE_API_URL}/users`, userData)
                                         .then((result) => {
                                             navigate(pathname, { replace: true })
                                             toast.success('Register Success')
-                                            console.log(result.user);
+                                            refetch();
                                         })
                                 });
                         })
