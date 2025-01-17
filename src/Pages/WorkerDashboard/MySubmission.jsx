@@ -19,7 +19,7 @@ const MySubmission = () => {
   }
 
   return (
-    <div className="w-full mx-auto px-4 py-8">
+    <div className="w-full mx-auto px-4 py-8 z-0">
       <h1 className="text-2xl font-bold text-center mb-6">My Submissions</h1>
       <div className="overflow-x-auto">
         <table className="table w-full border">
