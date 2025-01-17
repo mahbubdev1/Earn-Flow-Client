@@ -28,7 +28,15 @@ const BuyerHome = () => {
         }
     };
 
-    
+    const handleReject = async (id, taskId) => {
+        try {
+            await axios.patch(`${import.meta.env.VITE_API_URL}/submissions/reject/${id}`, { taskId });
+            toast.success("Submission rejected successfully!");
+            refetch();
+        } catch (error) {
+            toast.error("Failed to reject the submission.");
+        }
+    };
     
     return (
         <div className="p-6">
