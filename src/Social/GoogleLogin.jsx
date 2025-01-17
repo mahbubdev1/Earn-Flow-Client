@@ -17,7 +17,7 @@ const GoogleLogin = () => {
 
                 console.log(result.user);
                 const userData = { name: result.user.displayName, email: result.user.email, imageUrl: result.user.photoURL, role: 'Worker', userCoin: parseInt(10) }
-                axios.post(`${import.meta.env.VITE_API_URL}/users`, userData)
+                axios.post(`${import.meta.env.VITE_API_URL}/users/${result.user.email}`, userData)
                     .then((result) => {
                         navigate(pathname, { replace: true })
                         toast.success('Register Success')

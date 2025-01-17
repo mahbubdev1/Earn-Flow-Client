@@ -20,6 +20,7 @@ import WithDrawals from "../Pages/WorkerDashboard/WithDrawals";
 import AdminHome from "../Pages/AdminDashboard/AdminHome";
 import ManageUsers from "../Pages/AdminDashboard/ManageUsers";
 import ManageTasks from "../Pages/AdminDashboard/ManageTasks";
+import TaskDetails from "../Pages/WorkerDashboard/TaskDetails";
 
 const router = createBrowserRouter([
     {
@@ -81,6 +82,10 @@ const router = createBrowserRouter([
             {
                 path: 'taskList',
                 element: <TaskList></TaskList>
+            },
+            {
+                path:'taskDetails/:id',
+                element: <TaskDetails></TaskDetails>
             },
             {
                 path: 'mySubmission',

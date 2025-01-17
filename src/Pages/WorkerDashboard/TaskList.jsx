@@ -31,7 +31,7 @@ const TaskList = () => {
                             <p className="text-sm text-gray-600">Required Workers: <span className="font-medium">{task.requiredWorkers}</span></p>
                             <button
                                 className="w-full mt-4 py-2 px-4 text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors duration-300"
-                                onClick={() => navigate(`/taskDetails/${task._id}`)}
+                                onClick={() => navigate(`/dashboard/taskDetails/${task._id}`)}
                             >
                                 View Details
                             </button>
