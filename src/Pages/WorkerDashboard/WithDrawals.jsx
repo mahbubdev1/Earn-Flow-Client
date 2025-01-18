@@ -50,7 +50,7 @@ const WithDrawals = () => {
         };
 
         try {
-            const res = await axios.post(`${import.meta.env.VITE_API_URL}/withdrawals/${user?.email}`, withdrawalData);
+            const res = await axios.post(`${import.meta.env.VITE_API_URL}/withdrawals`, withdrawalData);
             if (res.data.insertedId) {
                 refetch();
                 Swal.fire("Success", "Withdrawal request submitted!");
