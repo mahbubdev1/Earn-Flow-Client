@@ -138,7 +138,7 @@ const Dashboard = () => {
                             {
                                 role === 'Admin' && <>
                                     <NavLink
-                                        to="/dashboard/adminHome "
+                                        to="/dashboard/adminHome"
                                         className={({ isActive }) =>
                                             `flex items-center justify-center px-5 py-2 gap-2 text-lg font-medium mx-auto ${isActive ? 'bg-blue-600' : 'bg-blue-500 hover:bg-blue-600'
                                             }`
@@ -281,7 +281,7 @@ const Dashboard = () => {
                                         {
                                             role === 'Admin' && <>
                                                 <NavLink
-                                                    to="/dashboard/adminHome "
+                                                    to="/dashboard/adminHome"
                                                     className={({ isActive }) =>
                                                         `flex items-center justify-center px-5 py-2 gap-2 text-lg font-medium mx-auto ${isActive ? 'bg-blue-600' : 'bg-blue-500 hover:bg-blue-600'
                                                         }`

@@ -74,7 +74,7 @@ const WithDrawals = () => {
                     <div className="mb-4">
                         <label className="block mb-1">Coin to Withdraw:</label>
                         <input
-                            type="number"
+                            type="text"
                             value={withdrawCoin}
                             onChange={handleWithdrawCoinChange}
                             max={coin}

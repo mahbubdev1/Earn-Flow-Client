@@ -13,7 +13,7 @@ const PurchaseCoin = () => {
 
     // Handle card click to redirect to payment
     const handlePurchase = (price) => {
-        navigate(`/dashboard/pay/${price * 100}`); // Redirect with amount in cents
+        navigate(`/dashboard/pay/${price * 100}`);
     };
 
     return (
