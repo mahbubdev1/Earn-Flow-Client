@@ -13,22 +13,6 @@ const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
     const [coin, setCoin] = useState(0);
 
-    // Load coin value from localStorage if available
-    // useEffect(() => {
-    //     const storedCoin = localStorage.getItem("coin");
-    //     if (storedCoin) {
-    //         setCoin(parseInt(storedCoin));
-    //     }
-    // }, []);
-
-    // Update coin value in localStorage whenever coin changes
-    // useEffect(() => {
-    //     if (coin !== 0) {
-    //         localStorage.setItem("coin", coin);
-    //     }
-    // }, [coin]);
-
-
     const { data, refetch } = useQuery({
         queryKey: ['users', user?.email],
         queryFn: async () => {
