@@ -8,9 +8,9 @@ const WorkerHome = () => {
 
     // Fetch submissions
     const { data: submissions = [], isLoading } = useQuery({
-        queryKey: ["submission", user?.email],
+        queryKey: ["submissionsData", user?.email],
         queryFn: async () => {
-            const res = await axios.get(`${import.meta.env.VITE_API_URL}/submissions/${user?.email}`);
+            const res = await axios.get(`${import.meta.env.VITE_API_URL}/submissions/data/${user?.email}`);
             return res.data;
         },
     });

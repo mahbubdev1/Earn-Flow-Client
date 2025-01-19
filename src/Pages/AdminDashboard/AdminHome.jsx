@@ -95,7 +95,7 @@ const AdminHome = () => {
             <div className="overflow-x-auto">
                 <table className="table table-zebra w-full">
                     <thead>
-                        <tr>
+                        <tr className="text-base text-gray-700">
                             <th>No</th>
                             <th>Name</th>
                             <th>Email</th>

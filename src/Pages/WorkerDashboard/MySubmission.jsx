@@ -1,18 +1,35 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import useAuth from "../../hook/useAuth";
+import { useState } from "react";
 
 const MySubmission = () => {
   const { user } = useAuth();
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 3;
 
   // Fetch submissions
-  const { data: submissions = [], isLoading } = useQuery({
-    queryKey: ["submission", user?.email],
+  const { data: submissionResponse = {}, isLoading } = useQuery({
+    queryKey: ["submission", user?.email, currentPage],
     queryFn: async () => {
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/submissions/${user?.email}`);
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_URL}/submissions/${user?.email}?page=${currentPage}&limit=${itemsPerPage}`
+      );
       return res.data;
     },
   });
+
+  const submissions = submissionResponse?.submissions || [];
+  const totalSubmissions = submissionResponse?.total || 0;
+  const totalPages = Math.ceil(totalSubmissions / itemsPerPage);
+
+
+
+  const handlePageChange = (page) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  };
 
   if (isLoading) {
     return <h2 className="text-center text-xl font-semibold text-gray-600">Loading...</h2>;
@@ -36,25 +53,23 @@ const MySubmission = () => {
           </thead>
           {/* Table Body */}
           <tbody>
-            {/* Map through submissions */}
-            {submissions.map((submission) => (
+            {submissions?.map((submission) => (
               <tr key={submission._id} className="hover:bg-gray-50">
-                <td className="py-2 px-4">{submission.task_title}</td>
-                <td className="py-2 px-4">{submission.buyer_name}</td>
-                <td className="py-2 px-4">${submission.payable_amount}</td>
-                <td className="py-2 px-4 truncate max-w-xs" title={submission.submission_details}>
-                  {submission.submission_details}
+                <td className="py-2 px-4">{submission?.task_title}</td>
+                <td className="py-2 px-4">{submission?.buyer_name}</td>
+                <td className="py-2 px-4">${submission?.payable_amount}</td>
+                <td className="py-2 px-4 truncate max-w-xs" title={submission?.submission_details}>
+                  {submission?.submission_details}
                 </td>
-                <td className="py-2 px-4">{new Date(submission.current_date).toLocaleDateString()}</td>
+                <td className="py-2 px-4">{new Date(submission?.current_date).toLocaleDateString()}</td>
                 <td className="py-2 px-4">
                   <span
-                    className={`px-3 py-1 rounded-full text-white text-sm font-semibold ${
-                      submission.status === "pending"
-                        ? "bg-yellow-500"
-                        : submission.status === "approved"
+                    className={`px-3 py-1 rounded-full text-white text-sm font-semibold ${submission.status === "pending"
+                      ? "bg-yellow-500"
+                      : submission.status === "approved"
                         ? "bg-green-500"
                         : "bg-red-500"
-                    }`}
+                      }`}
                   >
                     {submission.status.toUpperCase()}
                   </span>
@@ -63,6 +78,26 @@ const MySubmission = () => {
             ))}
           </tbody>
         </table>
+      </div>
+      {/* Pagination */}
+      <div className="flex justify-center mt-6 items-center">
+        <button
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+          className={`px-4 py-2 mx-1 rounded ${currentPage === 1 ? "bg-gray-300" : "bg-blue-500 text-white"} `}
+        >
+          Previous
+        </button>
+        <span className="mx-2 text-lg font-medium">
+          Page {currentPage} of {totalPages}
+        </span>
+        <button
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+          className={`px-4 py-2 mx-1 rounded ${currentPage === totalPages ? "bg-gray-300" : "bg-blue-500 text-white"} `}
+        >
+          Next
+        </button>
       </div>
     </div>
   );
