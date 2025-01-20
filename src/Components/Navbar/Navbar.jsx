@@ -1,9 +1,24 @@
 import { Link, NavLink } from "react-router-dom";
 import useAuth from "../../hook/useAuth";
 import { toast } from "react-toastify";
+import useRole from "../../hook/useRole";
 
 const Navbar = () => {
     const { handleSignOut, user, coin } = useAuth();
+    const [role] = useRole();
+
+
+    let routerHome = '';
+    if (role === 'Admin') {
+        routerHome = '/dashboard/adminHome';
+    }
+    else if (role === 'Buyer') {
+        routerHome = '/dashboard/buyerHome'
+    }
+    else {
+        routerHome = '/dashboard/workerHome'
+    }
+
 
     const handleSignOutBtn = async () => {
         await handleSignOut()
@@ -36,7 +51,7 @@ const Navbar = () => {
                     {
                         user && <>
                             <NavLink
-                                to="/dashboard"
+                                to={routerHome}
                                 className={({ isActive }) =>
                                     isActive
                                         ? "text-cyan-300 font-semibold"

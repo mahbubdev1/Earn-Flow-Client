@@ -18,23 +18,43 @@ const BuyerHome = () => {
         }
     });
 
-    const handleApprove = async (id, workerEmail, coin) => {
+    const handleApprove = async (id, workerEmail, coin, buyer_name, task_title) => {
+        const notificationData = {
+            message: `Your Have Earn ${coin} Coin. From ${buyer_name}, for completing ${task_title}`,
+            workerEmail: workerEmail,
+            time: new Date().toISOString(),
+        };
         try {
-            await axios.patch(`${import.meta.env.VITE_API_URL}/submissions/approve/${id}`, { workerEmail, coin });
-            toast.success("Submission approved successfully!");
-            refetch();
-        } catch (error) {
-            console.error(error);
+            await axios.patch(`${import.meta.env.VITE_API_URL}/submissions/approve/${id}`, { workerEmail, coin })
+                .then(async () => {
+                    await axios.post(`${import.meta.env.VITE_API_URL}/notifications`, notificationData)
+                        .then(() => {
+                            toast.success("Submission approved successfully!");
+                            refetch();
+                        })
+                })
+        } catch {
+            // console.error(error);
             toast.error("Failed to approve the submission.");
         }
     };
 
-    const handleReject = async (id, taskId) => {
+    const handleReject = async (id, taskId, buyer_name, task_title, workerEmail) => {
+        const notificationData = {
+            message: `Sorry Mr. ${buyer_name}, your work is rejected ${task_title}`,
+            workerEmail: workerEmail,
+            time: new Date().toISOString(),
+        }
         try {
-            await axios.patch(`${import.meta.env.VITE_API_URL}/submissions/reject/${id}`, { taskId });
-            toast.success("Submission rejected successfully!");
-            refetch();
-        } catch (error) {
+            await axios.patch(`${import.meta.env.VITE_API_URL}/submissions/reject/${id}`, { taskId })
+                .then(async () => {
+                    await axios.post(`${import.meta.env.VITE_API_URL}/notifications`, notificationData)
+                        .then(() => {
+                            toast.error("Submission rejected successfully!");
+                            refetch();
+                        })
+                })
+        } catch {
             toast.error("Failed to reject the submission.");
         }
     };
@@ -91,13 +111,13 @@ const BuyerHome = () => {
                                         </button>
                                         <button
                                             className="btn btn-success btn-sm mr-2 text-white"
-                                            onClick={() => handleApprove(submission._id, submission.worker_email, submission.payable_amount)}
+                                            onClick={() => handleApprove(submission._id, submission.worker_email, submission.payable_amount, submission.task_title)}
                                         >
                                             Approve
                                         </button>
                                         <button
                                             className="btn btn-error btn-sm text-white"
-                                            onClick={() => handleReject(submission._id, submission.task_id)}
+                                            onClick={() => handleReject(submission._id, submission.task_id, submission.buyer_name, submission.task_title, submission.worker_email)}
                                         >
                                             Reject
                                         </button>

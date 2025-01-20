@@ -15,14 +15,25 @@ const AdminHome = () => {
     });
 
     const handlePaymentSuccess = (id, worker_email, withdrawal_coin) => {
+        const notificationData = {
+            worker_email: worker_email,
+            role: 'buyer',
+            date: new Date().toISOString(),
+            withdrawal_coin,
+            message: `Dear ${worker_email}, your withdrawal of ${withdrawal_coin} coins has been successfully processed. Thank you for using our platform!`
+        };
+
         axios.patch(`${import.meta.env.VITE_API_URL}/withdrawals/approve/${id}`, {
             email: worker_email,
             withdrawal_coin: withdrawal_coin
         })
-            .then(result => {
+            .then(async result => {
                 if (result.data.modifiedCount > 0) {
-                    toast.success('Payment Update Success')
-                    refetch();
+                    await axios.post(`${import.meta.env.VITE_API_URL}/notifications`, notificationData)
+                        .then(() => {
+                            toast.success('Payment Update Success')
+                            refetch();
+                        })
                 }
             })
     };

@@ -21,6 +21,7 @@ import AdminHome from "../Pages/AdminDashboard/AdminHome";
 import ManageUsers from "../Pages/AdminDashboard/ManageUsers";
 import ManageTasks from "../Pages/AdminDashboard/ManageTasks";
 import TaskDetails from "../Pages/WorkerDashboard/TaskDetails";
+import Notification from "../Pages/Dashboard/Notification";
 
 const router = createBrowserRouter([
     {
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
         path: '/dashboard',
         element: <Dashboard></Dashboard>,
         children: [
+            {
+                path: 'notification',
+                element: <Notification></Notification>
+            },
             // Buyer Router
             {
                 path: 'buyerHome',
