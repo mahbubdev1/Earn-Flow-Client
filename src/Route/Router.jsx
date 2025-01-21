@@ -22,6 +22,8 @@ import ManageUsers from "../Pages/AdminDashboard/ManageUsers";
 import ManageTasks from "../Pages/AdminDashboard/ManageTasks";
 import TaskDetails from "../Pages/WorkerDashboard/TaskDetails";
 import Notification from "../Pages/Dashboard/Notification";
+import PrivateRoute from "./PrivateRoute";
+import AdminRoute from "./AdminRoute";
 
 const router = createBrowserRouter([
     {
@@ -44,7 +46,7 @@ const router = createBrowserRouter([
     },
     {
         path: '/dashboard',
-        element: <Dashboard></Dashboard>,
+        element: <PrivateRoute> <Dashboard></Dashboard></PrivateRoute>,
         children: [
             {
                 path: 'notification',
@@ -89,7 +91,7 @@ const router = createBrowserRouter([
                 element: <TaskList></TaskList>
             },
             {
-                path:'taskDetails/:id',
+                path: 'taskDetails/:id',
                 element: <TaskDetails></TaskDetails>
             },
             {
@@ -102,8 +104,8 @@ const router = createBrowserRouter([
             },
             // Admin Related Route
             {
-                path:'adminHome',
-                element: <AdminHome></AdminHome>
+                path: 'adminHome',
+                element: <AdminRoute><AdminHome></AdminHome></AdminRoute>
             },
             {
                 path: 'manageUsers',

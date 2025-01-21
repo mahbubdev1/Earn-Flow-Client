@@ -1,13 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../hook/useAxiosSecure";
 
 const ManageTasks = () => {
+    const axiosSecure = useAxiosSecure();
     // Fetching Tasks Data
     const { data: tasks = [], refetch } = useQuery({
         queryKey: ['tasks'],
         queryFn: async () => {
-            const res = await axios.get(`${import.meta.env.VITE_API_URL}/tasks`);
+            const res = await axiosSecure.get(`/tasks`);
             return res.data;
         }
     });

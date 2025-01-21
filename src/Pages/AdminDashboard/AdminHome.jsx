@@ -2,8 +2,10 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { Pie, PieChart } from "recharts";
+import useAxiosSecure from "../../hook/useAxiosSecure";
 
 const AdminHome = () => {
+    const axiosSecure = useAxiosSecure();
 
     // Fetch withdrawals
     const { data: withdrawals = [], isLoading, refetch } = useQuery({
@@ -41,7 +43,7 @@ const AdminHome = () => {
     const { data: users = [] } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
-            const res = await axios.get(`${import.meta.env.VITE_API_URL}/users`)
+            const res = await axiosSecure.get(`/users`)
             return res.data;
         }
     });

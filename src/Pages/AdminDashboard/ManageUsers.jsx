@@ -2,12 +2,15 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../hook/useAxiosSecure";
 
 const ManageUsers = () => {
+    const axiosSecure = useAxiosSecure();
+
     const { data: users = [], refetch } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
-            const res = await axios.get(`${import.meta.env.VITE_API_URL}/users`);
+            const res = await axiosSecure.get(`/users`);
             return res.data;
         }
     });
