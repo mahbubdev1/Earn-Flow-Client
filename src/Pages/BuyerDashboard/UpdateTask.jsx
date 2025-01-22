@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import Loading from "../../Components/ErrorLoading/Loading";
 
 const UpdateTask = () => {
     const { id } = useParams();
@@ -17,7 +18,7 @@ const UpdateTask = () => {
     });
 
     if (isLoading) {
-        return <p>Loading...</p>;
+        return <Loading></Loading>
     }
 
     if (error) {

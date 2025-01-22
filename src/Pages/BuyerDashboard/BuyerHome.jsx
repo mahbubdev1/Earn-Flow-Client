@@ -5,6 +5,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { Pie, PieChart } from "recharts";
 import useAxiosSecure from "../../hook/useAxiosSecure";
+import Loading from "../../Components/ErrorLoading/Loading";
 
 
 const BuyerHome = () => {
@@ -12,7 +13,7 @@ const BuyerHome = () => {
     const axiosSecure = useAxiosSecure();
     const [selectedSubmission, setSelectedSubmission] = useState(null);
 
-    const { data: submissions = [], refetch } = useQuery({
+    const { data: submissions = [], refetch, isLoading } = useQuery({
         queryKey: ['tasks', user?.email],
         queryFn: async () => {
             const res = await axiosSecure.get(`/tasks/worker/${user?.email}`)
@@ -61,7 +62,7 @@ const BuyerHome = () => {
         }
     };
 
-    const { data: allSubmission = [] } = useQuery({
+    const { data: allSubmission = [], isLoading: loading } = useQuery({
         queryKey: ['submission', user?.email],
         queryFn: async () => {
             const res = await axios.get(`${import.meta.env.VITE_API_URL}/submissions/all/${user?.email}`)
@@ -77,6 +78,10 @@ const BuyerHome = () => {
         { name: 'Total Pending', value: totalPending, fill: "red    " },
         { name: 'Total Coin', value: totalCoin, fill: "orange" },
     ];
+
+    if(isLoading || loading){
+        return <Loading></Loading>
+    }
 
     return (
         <div className="p-6">

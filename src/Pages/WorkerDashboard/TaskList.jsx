@@ -1,16 +1,21 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Loading from "../../Components/ErrorLoading/Loading";
 
 const TaskList = () => {
     const navigate = useNavigate();
-    const { data: tasks } = useQuery({
+    const { data: tasks, isLoading } = useQuery({
         queryKey: ['tasks'],
         queryFn: async () => {
             const res = await axios.get(`${import.meta.env.VITE_API_URL}/tasks`);
             return res.data
         }
     });
+
+    if(isLoading){
+        return <Loading></Loading>
+    }
 
     return (
         <div>

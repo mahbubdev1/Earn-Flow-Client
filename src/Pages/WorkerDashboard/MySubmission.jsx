@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import useAuth from "../../hook/useAuth";
 import { useState } from "react";
+import Loading from "../../Components/ErrorLoading/Loading";
 
 const MySubmission = () => {
   const { user } = useAuth();
@@ -32,7 +33,7 @@ const MySubmission = () => {
   };
 
   if (isLoading) {
-    return <h2 className="text-center text-xl font-semibold text-gray-600">Loading...</h2>;
+    return <Loading></Loading>
   }
 
   return (

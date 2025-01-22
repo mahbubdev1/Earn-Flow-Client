@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../hook/useAuth";
 import axios from "axios";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Label, LabelList } from 'recharts';
+import Loading from "../../Components/ErrorLoading/Loading";
 
 const WorkerHome = () => {
     const { user } = useAuth();
@@ -16,7 +17,7 @@ const WorkerHome = () => {
     });
 
     // Fetch completed tasks
-    const { data: completeTask = [] } = useQuery({
+    const { data: completeTask = [], isLoading: loading } = useQuery({
         queryKey: ['tasks', user?.email],
         queryFn: async () => {
             const res = await axios.get(`${import.meta.env.VITE_API_URL}/tasks/complete/${user?.email}`);
@@ -33,6 +34,10 @@ const WorkerHome = () => {
         { name: 'Pending Submissions', value: totalPendingSubmissions },
         { name: 'Total Earnings', value: totalEarnings }
     ];
+
+    if(isLoading || loading){
+        return <Loading></Loading>
+    }
 
     return (
         <div>

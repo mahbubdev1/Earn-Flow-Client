@@ -3,6 +3,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { Pie, PieChart } from "recharts";
 import useAxiosSecure from "../../hook/useAxiosSecure";
+import Loading from "../../Components/ErrorLoading/Loading";
 
 const AdminHome = () => {
     const axiosSecure = useAxiosSecure();
@@ -40,7 +41,7 @@ const AdminHome = () => {
             })
     };
 
-    const { data: users = [] } = useQuery({
+    const { data: users = [], isLoading: loading } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
             const res = await axiosSecure.get(`/users`)
@@ -48,7 +49,7 @@ const AdminHome = () => {
         }
     });
 
-    const { data: withdrawal = [] } = useQuery({
+    const { data: withdrawal = [], isLoading: withdrawalLoading } = useQuery({
         queryKey: ['withdrawal'],
         queryFn: async () => {
             const res = await axios.get(`${import.meta.env.VITE_API_URL}/withdrawal/all`)
@@ -62,8 +63,8 @@ const AdminHome = () => {
     const totalCoin = users.reduce((user, sum) => user + sum.userCoin, 0);
 
     // Loader while fetching
-    if (isLoading) {
-        return <div>Loading...</div>;
+    if (isLoading || loading || withdrawalLoading) {
+        return <Loading></Loading>
     };
 
     const chartsData = [

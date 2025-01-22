@@ -2,11 +2,12 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../hook/useAxiosSecure";
+import Loading from "../../Components/ErrorLoading/Loading";
 
 const ManageTasks = () => {
     const axiosSecure = useAxiosSecure();
     // Fetching Tasks Data
-    const { data: tasks = [], refetch } = useQuery({
+    const { data: tasks = [], refetch, isLoading } = useQuery({
         queryKey: ['tasks'],
         queryFn: async () => {
             const res = await axiosSecure.get(`/tasks`);
@@ -38,6 +39,10 @@ const ManageTasks = () => {
             }
         });
     };
+
+    if(isLoading) {
+        return <Loading></Loading>
+    }
 
     return (
         <div className="p-5">

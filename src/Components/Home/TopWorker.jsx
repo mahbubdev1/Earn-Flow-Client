@@ -2,15 +2,20 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import 'animate.css';
 import { Bounce } from "react-awesome-reveal";
+import Loading from "../ErrorLoading/Loading";
 
 const TopWorker = () => {
-    const { data: topWorkers = [] } = useQuery({
+    const { data: topWorkers = [], isLoading } = useQuery({
         queryKey: ['topWorkers'],
         queryFn: async () => {
             const res = await axios.get(`${import.meta.env.VITE_API_URL}/users/top`);
             return res.data;
         }
     });
+
+    if(isLoading){
+        return <Loading></Loading>
+    }
 
     return (
         <div className="animate__animated animate__backInLeft animate__slow">

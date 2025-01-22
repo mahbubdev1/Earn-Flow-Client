@@ -3,11 +3,12 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../hook/useAxiosSecure";
+import Loading from "../../Components/ErrorLoading/Loading";
 
 const ManageUsers = () => {
     const axiosSecure = useAxiosSecure();
 
-    const { data: users = [], refetch } = useQuery({
+    const { data: users = [], refetch, isLoading } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
             const res = await axiosSecure.get(`/users`);
@@ -50,6 +51,10 @@ const ManageUsers = () => {
         });
 
     };
+
+    if(isLoading){
+        return <Loading></Loading>
+    }
 
     return (
         <div className="p-5">

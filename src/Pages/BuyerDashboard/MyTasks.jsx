@@ -4,13 +4,14 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../hook/useAxiosSecure";
+import Loading from "../../Components/ErrorLoading/Loading";
 
 const MyTasks = () => {
     const { user, refetch } = useAuth();
     const axiosSecure = useAxiosSecure();
 
     // Fetch tasks data
-    const { data: tasks = [], refetch: taskRefetch } = useQuery({
+    const { data: tasks = [], refetch: taskRefetch, isLoading } = useQuery({
         queryKey: ['tasks', user?.email],
         queryFn: async () => {
             const { data } = await axiosSecure.get(`/tasks/user/${user?.email}`);
@@ -43,6 +44,10 @@ const MyTasks = () => {
             }
         });
     };
+
+    if(isLoading) {
+        return <Loading></Loading>
+    }
 
     return (
         <div className="w-full mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">

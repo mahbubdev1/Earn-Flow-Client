@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 import useAuth from "./useAuth";
 
 const axiosSecure = axios.create({
-    baseURL: 'http://localhost:5000',
+    baseURL: 'https://earn-flow-server.vercel.app',
     withCredentials: true
-    // baseURL: 'https://earn-flow-server.vercel.app'
+    // baseURL: 'http://localhost:5000',
 });
 
 const useAxiosSecure = () => {

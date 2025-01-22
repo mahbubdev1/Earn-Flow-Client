@@ -4,13 +4,14 @@ import { useParams } from "react-router-dom";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import useAuth from "../../hook/useAuth";
+import Loading from "../../Components/ErrorLoading/Loading";
 
 const TaskDetails = () => {
     const { id } = useParams();
     const { user } = useAuth();
     const [submissionDetails, setSubmissionDetails] = useState("");
 
-    const { data = {} } = useQuery({
+    const { data = {}, isLoading } = useQuery({
         queryKey: ['tasks', id],
         queryFn: async () => {
             const res = await axios.get(`${import.meta.env.VITE_API_URL}/tasks/${id}`);
@@ -44,6 +45,10 @@ const TaskDetails = () => {
             Swal.fire("Error", "Failed to save submission!", "error");
         }
     };
+
+    if(isLoading){
+        return <Loading></Loading>
+    }
 
     return (
         <div className="p-6">
