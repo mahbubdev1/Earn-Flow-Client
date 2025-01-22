@@ -28,7 +28,7 @@ const Navbar = () => {
     }
     return (
         <div className="bg-gradient-to-r from-blue-500 to-cyan-500 shadow-lg">
-            <div className="navbar container mx-auto text-white">
+            <div className="navbar container mx-auto py-3 text-white">
                 {/* Logo Section */}
                 <div className="flex-1">
                     <Link className="text-2xl font-bold tracking-wide hover:text-cyan-300">
@@ -93,7 +93,7 @@ const Navbar = () => {
                 </div>
 
                 {/* User Profile Dropdown */}
-                <div className="dropdown dropdown-end">
+                <div className="dropdown dropdown-end z-50">
                     <div
                         tabIndex={0}
                         role="button"
@@ -116,8 +116,27 @@ const Navbar = () => {
                                 <span className="badge bg-cyan-500 text-white">New</span>
                             </Link>
                         </li>
-                        <li><Link className="hover:bg-cyan-100">Settings</Link></li>
-                        <li><Link className="hover:bg-cyan-100">Logout</Link></li>
+                        <div className="flex flex-col items-center justify-center lg:hidden space-y-2">
+                            <NavLink
+                                to="https://github.com/Programming-Hero-Web-Course4/b10a12-client-side-mahbubdev1"
+                                className='px-5 py-1 text-base bg-blue-500 w-full text-white rounded-lg'>
+                                Join Us
+                            </NavLink>
+                            {
+                                user && <>
+                                    <NavLink
+                                        to={routerHome}
+                                        className='px-5 py-1 bg-blue-500 w-full text-base text-white rounded-lg'>
+                                        Dashboard
+                                    </NavLink>
+                                    <NavLink
+                                        to="/availableCoin"
+                                        className='text-base'>
+                                        Available Coin ${coin}
+                                    </NavLink>
+                                </>
+                            }
+                        </div>
                     </ul>
                 </div>
             </div>

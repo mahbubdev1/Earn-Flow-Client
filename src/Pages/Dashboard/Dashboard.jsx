@@ -8,6 +8,7 @@ import axios from "axios";
 import { useState } from "react";
 import useRole from "../../hook/useRole";
 import 'animate.css';
+import { GiHamburgerMenu } from "react-icons/gi";
 
 const Dashboard = () => {
     const { user, coin } = useAuth();
@@ -52,12 +53,12 @@ const Dashboard = () => {
         <div className="flex flex-col">
             {/* Top Header */}
             <header className="bg-blue-500">
-                <div className="container mx-auto text-white px-6 py-4 flex justify-between items-center">
+                <div className="container mx-auto text-white py-4 flex justify-between items-center">
                     <div className="font-bold text-2xl"><Link to='/'>EarnFlow</Link></div>
                     <div className="flex items-center space-x-4">
                         <div className="text-right">
                             <p className="font-bold">{user?.displayName}</p>
-                            <p className="text-sm">Coins: {coin}</p>
+                            <p className="text-sm">Total Coins: {coin}</p>
                         </div>
                         <img
                             src={user?.photoURL}
@@ -91,11 +92,11 @@ const Dashboard = () => {
                         <div className="drawer">
                             <input id="my-drawer" type="checkbox" className="drawer-toggle" />
                             <div className="drawer-content">
-                                <label htmlFor="my-drawer" className="btn btn-primary drawer-button">Open</label>
+                                <label htmlFor="my-drawer" className=" text-blue-500"><GiHamburgerMenu size={30} /></label>
                             </div>
                             <div className="drawer-side">
                                 <label htmlFor="my-drawer" aria-label="close sidebar" className="drawer-overlay"></label>
-                                <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
+                                <ul className="menu bg-base-200 min-h-full text-white w-80 p-4">
                                     <DashboardRoute></DashboardRoute>
                                 </ul>
                             </div>
@@ -104,7 +105,7 @@ const Dashboard = () => {
                 </aside>
 
                 {/* Main Section */}
-                <main className="flex-1 col-span-10 p-6">
+                <main className="flex-1 col-span-10 py-6">
                     <Outlet></Outlet>
                 </main>
             </div>

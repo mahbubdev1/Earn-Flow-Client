@@ -1,5 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import 'animate.css';
+import { Bounce } from "react-awesome-reveal";
 
 const TopWorker = () => {
     const { data: topWorkers = [] } = useQuery({
@@ -11,8 +13,10 @@ const TopWorker = () => {
     });
 
     return (
-        <div className="">
-            <h2 className="text-4xl font-bold mb-10 mt-16 text-center"><span className="text-blue-500">Best</span> Workers</h2>
+        <div className="animate__animated animate__backInLeft animate__slow">
+            <Bounce>
+                <h2 className="text-4xl font-bold mb-10 mt-16 text-center"><span className="text-blue-500">Best</span> Workers</h2>
+            </Bounce>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {topWorkers.map((worker) => (
                     <div

@@ -4,16 +4,18 @@ import axios from "axios";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { Pie, PieChart } from "recharts";
+import useAxiosSecure from "../../hook/useAxiosSecure";
 
 
 const BuyerHome = () => {
     const { user } = useAuth();
+    const axiosSecure = useAxiosSecure();
     const [selectedSubmission, setSelectedSubmission] = useState(null);
 
     const { data: submissions = [], refetch } = useQuery({
         queryKey: ['tasks', user?.email],
         queryFn: async () => {
-            const res = await axios.get(`${import.meta.env.VITE_API_URL}/tasks/worker/${user?.email}`)
+            const res = await axiosSecure.get(`/tasks/worker/${user?.email}`)
             return res.data;
         }
     });
@@ -78,8 +80,8 @@ const BuyerHome = () => {
 
     return (
         <div className="p-6">
-            <div>
-                <PieChart width={730} height={250}>
+            <div className="flex justify-center">
+                <PieChart width={300} height={250}>
                     <Pie data={chartsData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={50} fill="#8884d8" />
                     <Pie data={chartsData} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={60} outerRadius={80} fill="#82ca9d" label />
                 </PieChart>
@@ -102,7 +104,7 @@ const BuyerHome = () => {
                                     <td>{submission.worker_name}</td>
                                     <td>{submission.task_title}</td>
                                     <td>${submission.payable_amount}</td>
-                                    <td>
+                                    <td className="flex">
                                         <button
                                             className="btn btn-info btn-sm mr-2 text-white"
                                             onClick={() => setSelectedSubmission(submission)}

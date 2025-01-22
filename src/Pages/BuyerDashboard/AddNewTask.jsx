@@ -2,6 +2,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import useAuth from "../../hook/useAuth";
 import { useNavigate } from "react-router-dom";
+import useAxiosSecure from "../../hook/useAxiosSecure";
 
 const api_key = import.meta.env.VITE_API_KEY;
 const image_api = `https://api.imgbb.com/1/upload?key=${api_key}`;
@@ -9,6 +10,7 @@ const image_api = `https://api.imgbb.com/1/upload?key=${api_key}`;
 const AddNewTask = () => {
     const { user, coin, setCoin } = useAuth();
     const navigate = useNavigate();
+    const axiosSecure = useAxiosSecure();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -61,7 +63,7 @@ const AddNewTask = () => {
                 };
 
                 // end data to the backend
-                const backendResponse = await axios.post(`${import.meta.env.VITE_API_URL}/tasks`, taskData);
+                const backendResponse = await axiosSecure.post(`/tasks`, taskData);
 
                 if (backendResponse.data.insertedId) {
                     // Calculate updated coin value
@@ -199,7 +201,7 @@ const AddNewTask = () => {
                 <input
                     value="Add Task"
                     type="submit"
-                    className="btn btn-primary w-full mt-4"
+                    className="btn bg-blue-500 text-white text-base w-full mt-4"
                 />
             </form>
         </div>

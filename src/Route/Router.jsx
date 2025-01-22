@@ -24,11 +24,13 @@ import TaskDetails from "../Pages/WorkerDashboard/TaskDetails";
 import Notification from "../Pages/Dashboard/Notification";
 import PrivateRoute from "./PrivateRoute";
 import AdminRoute from "./AdminRoute";
+import Error from "../Components/ErrorLoading/Error";
 
 const router = createBrowserRouter([
     {
         path: '/',
         element: <MainLayout></MainLayout>,
+        errorElement:<Error></Error> ,
         children: [
             {
                 path: '/',

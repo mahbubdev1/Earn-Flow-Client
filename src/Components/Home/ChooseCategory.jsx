@@ -1,3 +1,4 @@
+import { Fade, Zoom } from "react-awesome-reveal";
 import { FaLaptopCode, FaHome, FaBullhorn, FaUsers, FaHeartbeat, FaChalkboardTeacher, FaCode, FaChartLine } from "react-icons/fa";
 
 const categories = [
@@ -26,9 +27,13 @@ const ChooseCategory = () => {
                             key={category.id}
                             className="flex flex-col items-center bg-white shadow-md rounded-lg p-6 hover:shadow-lg transition duration-300"
                         >
-                            {category.icon}
-                            <h3 className="text-xl font-semibold text-gray-800 mt-4">{category.title}</h3>
-                            <p className="text-gray-600 mt-2">{category.jobs}</p>
+                            <Zoom>
+                                {category.icon}
+                            </Zoom>
+                            <Fade direction='up'>
+                                <h3 className="text-xl font-semibold text-gray-800 mt-4">{category.title}</h3>
+                                <p className="text-gray-600 mt-2">{category.jobs}</p>
+                            </Fade>
                         </div>
                     ))}
                 </div>

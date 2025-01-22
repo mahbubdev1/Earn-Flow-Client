@@ -1,3 +1,5 @@
+import { Bounce, Fade, Zoom } from "react-awesome-reveal";
+
 const Blogs = () => {
     const blogs = [
         {
@@ -38,21 +40,27 @@ const Blogs = () => {
                         key={blog.id}
                         className="bg-white shadow-lg rounded-lg overflow-hidden"
                     >
-                        <img
-                            src={blog.image}
-                            alt={blog.title}
-                            className="w-full h-72 object-cover"
-                        />
+                        <Zoom>
+                            <img
+                                src={blog.image}
+                                alt={blog.title}
+                                className="w-full h-72 object-cover"
+                            />
+                        </Zoom>
                         <div className="p-6">
-                            <h2 className="text-lg font-bold mb-2">{blog.title}</h2>
-                            <p className="text-gray-500 text-sm mb-4">{blog.date}</p>
-                            <p className="text-gray-700 text-sm mb-4">{blog.description}</p>
-                            <a
-                                href={`/blog/${blog.id}`}
-                                className="text-blue-500 hover:underline"
-                            >
-                                Read More
-                            </a>
+                            <Fade direction="up">
+                                <h2 className="text-lg font-bold mb-2">{blog.title}</h2>
+                            </Fade>
+                            <Fade>
+                                <p className="text-gray-500 text-sm mb-4">{blog.date}</p>
+                                <p className="text-gray-700 text-sm mb-4">{blog.description}</p>
+                                <a
+                                    href={`/blog/${blog.id}`}
+                                    className="text-blue-500 hover:underline"
+                                >
+                                    Read More
+                                </a>
+                            </Fade>
                         </div>
                     </div>
                 ))}

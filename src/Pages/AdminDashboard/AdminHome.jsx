@@ -75,21 +75,21 @@ const AdminHome = () => {
 
     return (
         <div className="p-5">
-            <div className="flex gap-10 justify-center">
-                <h1 className="text-xl font-bold mb-5">Platform Overview</h1>
-                <PieChart width={400} height={400}>
+            <div className="flex gap-7 max-sm:flex-col justify-center">
+                <h1 className="text-lg sm:text-xl font-bold mb-5">Platform Overview</h1>
+                <PieChart width={400} height={350}>
                     <Pie
                         data={chartsData}
                         dataKey="value"
                         nameKey="name"
-                        cx="50%"
-                        cy="50%"
-                        innerRadius={70}
-                        outerRadius={120}
+                        cx="40%"
+                        cy="40%"
+                        innerRadius={60}
+                        outerRadius={100}
                         label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(1)}%`}
                     />
                 </PieChart>
-                <div className="mt-4">
+                <div className="my-4">
                     <ul className="flex flex-col items-start space-y-2">
                         {chartsData.map((item) => (
                             <li key={item.name} className="flex items-center">

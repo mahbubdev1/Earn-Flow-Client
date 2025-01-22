@@ -3,15 +3,17 @@ import useAuth from "../../hook/useAuth";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../hook/useAxiosSecure";
 
 const MyTasks = () => {
     const { user, refetch } = useAuth();
+    const axiosSecure = useAxiosSecure();
 
     // Fetch tasks data
     const { data: tasks = [], refetch: taskRefetch } = useQuery({
         queryKey: ['tasks', user?.email],
         queryFn: async () => {
-            const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/tasks/user/${user?.email}`);
+            const { data } = await axiosSecure.get(`/tasks/user/${user?.email}`);
             return data;
         }
     });
@@ -65,7 +67,7 @@ const MyTasks = () => {
                                 <td>{task.taskDetail}</td>
                                 <td>${task.requiredWorkers}</td>
                                 <td>{new Date(task.completionDate).toLocaleDateString()}</td>
-                                <td>
+                                <td className="sm:flex max-sm:space-y-1">
                                     <Link to={`/dashboard/updateTask/${task._id}`}>
                                         <button className="btn btn-sm btn-warning mr-2">
                                             Update

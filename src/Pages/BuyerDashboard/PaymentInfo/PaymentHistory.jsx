@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import useAuth from "../../../hook/useAuth";
+import useAxiosSecure from "../../../hook/useAxiosSecure";
 
 const PaymentHistory = () => {
     const { user } = useAuth();
     const [paymentHistory, setPaymentHistory] = useState([]);
+    const axiosSecure = useAxiosSecure();
 
     useEffect(() => {
         const fetchPaymentHistory = async () => {
             try {
-                const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/payment-history/${user?.email}`);
+                const { data } = await axiosSecure.get(`/payment-history/${user?.email}`);
                 setPaymentHistory(data);
             } catch (error) {
                 console.error("Error fetching payment history:", error);

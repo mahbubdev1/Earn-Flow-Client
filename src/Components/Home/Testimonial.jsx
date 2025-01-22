@@ -2,7 +2,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { Navigation, Pagination } from "swiper/modules";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import { Fade } from "react-awesome-reveal";
 
 // Static testimonial data
 const testimonials = [
@@ -46,31 +47,37 @@ const testimonials = [
 
 const Testimonial = () => {
     return (
-        <div className="py-10 bg-blue-100 my-[70px]">
-            <h2 className="text-3xl font-bold text-center mb-6">What Our Users Say</h2>
-            <Swiper
-                spaceBetween={30}
-                slidesPerView={1}
-                navigation
-                pagination={{ clickable: true }}
-                modules={[Navigation, Pagination]}
-                className="w-4/5 mx-auto"
-            >
-                {testimonials.map((testimonial) => (
-                    <SwiperSlide key={testimonial.id}>
-                        <div className="bg-white p-6 rounded-lg shadow-lg text-center">
-                            <img
-                                src={testimonial.image}
-                                alt={testimonial.name}
-                                className="w-24 h-24 rounded-full object-cover mx-auto mb-4"
-                            />
-                            <h3 className="text-xl font-semibold">{testimonial.name}</h3>
-                            <p className="text-gray-600 italic my-2">{`"${testimonial.feedback}"`}</p>
-                        </div>
-                    </SwiperSlide>
-                ))}
-            </Swiper>
-        </div>
+        <Fade damping={5}>
+            <div className="py-10 bg-blue-100 my-[70px]">
+                <h2 className="text-3xl font-bold text-center mb-6">What Our Users Say</h2>
+                <Swiper
+                    autoplay={{
+                        delay: 1500,
+                        disableOnInteraction: false,
+                    }}
+                    spaceBetween={30}
+                    slidesPerView={1}
+                    navigation
+                    pagination={{ clickable: true }}
+                    modules={[Navigation, Pagination, Autoplay]}
+                    className="w-4/5 mx-auto"
+                >
+                    {testimonials.map((testimonial) => (
+                        <SwiperSlide key={testimonial.id}>
+                            <div className="bg-white p-6 rounded-lg shadow-lg text-center">
+                                <img
+                                    src={testimonial.image}
+                                    alt={testimonial.name}
+                                    className="w-24 h-24 rounded-full object-cover mx-auto mb-4"
+                                />
+                                <h3 className="text-xl font-semibold">{testimonial.name}</h3>
+                                <p className="text-gray-600 italic my-2">{`"${testimonial.feedback}"`}</p>
+                            </div>
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
+            </div>
+        </Fade>
     );
 };
 
