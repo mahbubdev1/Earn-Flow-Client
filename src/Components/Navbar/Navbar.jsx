@@ -27,7 +27,7 @@ const Navbar = () => {
             })
     }
     return (
-        <div className="bg-gradient-to-r from-blue-500 to-cyan-500 shadow-lg">
+        <div className="bg-gradient-to-r from-blue-500 to-cyan-500 shadow-lg sticky backdrop-blur-lg">
             <div className="navbar container mx-auto py-3 text-white">
                 {/* Logo Section */}
                 <div className="flex-1">
