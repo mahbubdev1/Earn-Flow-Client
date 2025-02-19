@@ -3,6 +3,7 @@ import Banner from "./Banner";
 import Blogs from "./Blogs";
 import ChooseCategory from "./ChooseCategory";
 import Footer from "./Footer";
+import Leaderboard from "./Leaderboard";
 import Testimonial from "./Testimonial";
 import TopWorker from "./TopWorker";
 import Works from "./Works";
@@ -24,6 +25,7 @@ const Home = () => {
                 <Blogs></Blogs>
             </div>
             <Works></Works>
+            <Leaderboard></Leaderboard>
             <Footer></Footer>
         </div>
     );
