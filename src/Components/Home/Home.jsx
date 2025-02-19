@@ -5,6 +5,7 @@ import ChooseCategory from "./ChooseCategory";
 import Footer from "./Footer";
 import Testimonial from "./Testimonial";
 import TopWorker from "./TopWorker";
+import Works from "./Works";
 
 const Home = () => {
     return (
@@ -22,6 +23,7 @@ const Home = () => {
             <div className="container mx-auto">
                 <Blogs></Blogs>
             </div>
+            <Works></Works>
             <Footer></Footer>
         </div>
     );
